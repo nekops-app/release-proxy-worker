@@ -39,7 +39,20 @@ export const handleManifest = async (request: Request, env: Env, ctx: ExecutionC
 };
 
 export const handleAssets = async (request: Request, env: Env, ctx: ExecutionContext): Promise<Response> => {
-	const releaseAsset = env.REPO_BASE + `/releases/download/${new URL(request.url).pathname}`;
+	const pathSplits = new URL(request.url).pathname.split("/");
+	if (pathSplits.length !== 3) {
+		return new Response(null, {
+			status: 404,
+		});
+	}
+
+	const [_, version, artifact] = pathSplits;
+
+	const releaseAsset = env.REPO_BASE + "/releases/" + (
+			version === "latest" ? 
+			'latest/download' : 
+			`download/${version}`
+		) + "/" + artifact;
 
 	// Reverse proxy
 	const originRes = await fetch(releaseAsset);
