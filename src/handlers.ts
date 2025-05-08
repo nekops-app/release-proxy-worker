@@ -55,6 +55,5 @@ export const handleAssets = async (request: Request, env: Env, ctx: ExecutionCon
 		) + "/" + artifact;
 
 	// Reverse proxy
-	const originRes = await fetch(releaseAsset);
-	return new Response(originRes.body, originRes);
+	return fetch(releaseAsset);
 }
