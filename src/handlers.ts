@@ -49,8 +49,8 @@ export const handleAssets = async (request: Request, env: Env, ctx: ExecutionCon
 	const [_, version, artifact] = pathSplits;
 
 	const releaseAsset = env.REPO_BASE + "/releases/" + (
-			version === "latest" ? 
-			'latest/download' : 
+			version === "latest" ?
+			'latest/download' :
 			`download/${version}`
 		) + "/" + artifact;
 
